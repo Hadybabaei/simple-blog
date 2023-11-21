@@ -8,4 +8,8 @@ const hashPassword = (salt,password)=>{
     return bcrypt.hash(password,salt)
 }
 
-module.exports = {genSalt,hashPassword}
+const passwordCompare = (password,encryptedPassword)=>{
+    return bcrypt.compare(password,encryptedPassword)
+}
+
+module.exports = {genSalt,hashPassword,passwordCompare}

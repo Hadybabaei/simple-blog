@@ -1,6 +1,8 @@
 const express = require("express");
 const dataBaseConnection = require("./utils/database/dbConnect");
 const errorMiddleware = require("./middlewares/errorHandler.middleware");
+const helmet = require("helmet")
+const morgan = require("morgan")
 
 class App {
     app = express();
@@ -24,6 +26,8 @@ class App {
     initiateMiddlewares = ()=>{
         this.app.use(express.json())
         this.app.use(express.urlencoded({extended:false}))
+        this.app.use(helmet());
+        this.app.use(morgan('dev'));
     }
 
     errorHandler  = ()=>{
