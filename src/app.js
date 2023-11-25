@@ -2,7 +2,8 @@ const express = require("express");
 const dataBaseConnection = require("./utils/database/dbConnect");
 const errorMiddleware = require("./middlewares/errorHandler.middleware");
 const helmet = require("helmet")
-const morgan = require("morgan")
+const morgan = require("morgan");
+const swaggerDocs = require("./utils/swagger");
 
 class App {
     app = express();
@@ -15,6 +16,7 @@ class App {
         this.initiateControllers(this.controllers)
         this.initiateDatabase()
         this.errorHandler()
+        swaggerDocs(this.app,this.port)
     }
 
     initiateExpress = (port)=>{
