@@ -1,4 +1,4 @@
-const { Router, response } = require("express");
+const { Router } = require("express");
 const isLogged = require("../../middlewares/authentication.middleware");
 const validationMiddleware = require("../../middlewares/validation.middleware");
 const { createArticle } = require("./article.dto");
@@ -10,62 +10,62 @@ class ArticleController {
   _ArticleService = new ArticleService();
 
   constructor() {
-    
     this.initiateRouter();
   }
-
+ 
   initiateRouter = () => {
+    /**
+     * @openapi
+     * /api/articles:
+     *   post:
+     *     tags:
+     *       - Articles
+     *     description: Create a new article
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required:
+     *               - title
+     *               - description
+     *               - content
+     *             properties:
+     *               title:
+     *                 type: string
+     *               description:
+     *                 type: string
+     *               content:
+     *                 type: string
+     *     responses:
+     *       201:
+     *         description: Article Created Successfully
+     *         content:
+     *           application/json:
+     *             example:
+     *               Message: Article Created Successfully
+     *               Success: true
+     *
+     *   get:
+     *     tags:
+     *       - Articles
+     *     description: Responds if the app is up and articles are available
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       200:
+     *         description: App is running and up
+     */
+    
     this.router.post(
       this.path,
       isLogged,
       validationMiddleware(createArticle),
       this.createArticle
     );
-/**
- * @openapi
- * /api/articles:
- *   post:
- *     tags:
- *       - Articles
- *     description: Create a new article
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - title
- *               - description
- *               - content
- *             properties:
- *               title:
- *                 type: string
- *               description:
- *                 type: string
- *               content:
- *                 type: string
- *     responses:
- *       201:
- *         description: Article Created Successfully
- *         content:
- *           application/json:
- *             example:
- *               Message: Article Created Successfully
- *               Success: true
- *
- *   get:
- *     tags:
- *       - Articles
- *     description: Responds if the app is up and articles are available
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: App is running and up
- */
 
     this.router.get(this.path, isLogged, this.getAllArticles);
   };

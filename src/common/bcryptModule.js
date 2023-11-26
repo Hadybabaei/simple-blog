@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt")
 
-const  genSalt = async()=>{
+const  generateSalt = async()=>{
     return await bcrypt.genSalt()
 }
 
@@ -12,4 +12,4 @@ const passwordCompare = (password,encryptedPassword)=>{
     return bcrypt.compare(password,encryptedPassword)
 }
 
-module.exports = {genSalt,hashPassword,passwordCompare}
+module.exports = {generateSalt,hashPassword,passwordCompare}

@@ -2,9 +2,9 @@ const { Router } = require("express");
 const UserService = require("./user.service");
 const validationMiddleware = require("../../middlewares/validation.middleware");
 const { register, login } = require("./user.dto");
-const { genSalt, hashPassword } = require("../../common/bcrypt");
 const { generateJWT } = require("../../utils/token");
 const HttpExceptions = require("../../utils/exceptions/http.exceptions");
+const bcryptModule = require("../../common/bcryptModule")
 
 class UserController {
   path = "/users";
@@ -110,8 +110,8 @@ class UserController {
       if (user) {
         throw new HttpExceptions(400, "User Already Exists");
       }
-      const salt = await genSalt();
-      const password = await hashPassword(salt, req.body.password);
+      const salt = await bcryptModule.generateSalt();
+      const password = await bcryptModule.hashPassword(salt, req.body.password);
       req.body.password = password;
       req.body.salt = salt;
       req.body.last_login = Date.now();

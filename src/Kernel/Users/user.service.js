@@ -1,4 +1,4 @@
-const { passwordCompare } = require("../../common/bcrypt")
+const { passwordCompare } = require("../../common/bcryptModule")
 const _Users = require("./user.model")
 
 class UserService {
